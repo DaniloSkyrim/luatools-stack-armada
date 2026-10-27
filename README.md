@@ -32,19 +32,25 @@ Flags repassadas ao instalador: `--nolaunch`, `--noplugin`, `--no-gamemode`, `--
 
 ## Uso via curl (repositório privado)
 
-Repositório privado exige token no header (raw.githubusercontent.com não serve
-conteúdo privado sem autenticação):
+Com o token exportado, é uma linha só:
 
 ```bash
-export GH_TOKEN=...   # fine-grained com Contents: Read (ou classic com repo)
-
-curl -fsSL -H "Authorization: Bearer $GH_TOKEN" \
-  https://raw.githubusercontent.com/USER/luatools-stack-armada/main/install.sh \
-  | BUNDLE_BASE_URL=https://raw.githubusercontent.com/USER/luatools-stack-armada/main \
-    BUNDLE_AUTH_HEADER="Authorization: Bearer $GH_TOKEN" bash
+export GH_TOKEN=github_pat_...   # fine-grained, Contents: Read
+curl -fsSL -H "Authorization: Bearer $GH_TOKEN" https://raw.githubusercontent.com/DaniloSkyrim/luatools-stack-armada/main/install.sh | bash
 ```
 
-O bootstrap repassa o header em cada download dos artefatos.
+Sem deixar o token no histórico, pedindo na hora:
+
+```bash
+read -rsp 'Token: ' GH_TOKEN; echo; export GH_TOKEN; curl -fsSL -H "Authorization: Bearer $GH_TOKEN" https://raw.githubusercontent.com/DaniloSkyrim/luatools-stack-armada/main/install.sh | bash
+```
+
+O bootstrap lê `GH_TOKEN`/`GITHUB_TOKEN` do ambiente e repassa o header em cada
+download dos artefatos. Se o repositório for público, a forma curta é:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/DaniloSkyrim/luatools-stack-armada/main/install.sh | bash
+```
 
 ## Uso via curl (pasta hospedada)
 
