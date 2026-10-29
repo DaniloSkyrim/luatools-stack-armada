@@ -30,27 +30,33 @@ sudo ./install.sh              # ou: bash install.sh
 
 Flags repassadas ao instalador: `--nolaunch`, `--noplugin`, `--no-gamemode`, `--uninstall`, `--purge`.
 
-## Uso via curl (repositório privado)
+## Uso via curl (repositório público)
 
-Com o token exportado, é uma linha só:
-
-```bash
-export GH_TOKEN=github_pat_...   # fine-grained, Contents: Read
-curl -fsSL -H "Authorization: Bearer $GH_TOKEN" https://raw.githubusercontent.com/DaniloSkyrim/luatools-stack-armada/main/install.sh | bash
-```
-
-Sem deixar o token no histórico, pedindo na hora:
-
-```bash
-read -rsp 'Token: ' GH_TOKEN; echo; export GH_TOKEN; curl -fsSL -H "Authorization: Bearer $GH_TOKEN" https://raw.githubusercontent.com/DaniloSkyrim/luatools-stack-armada/main/install.sh | bash
-```
-
-O bootstrap lê `GH_TOKEN`/`GITHUB_TOKEN` do ambiente e repassa o header em cada
-download dos artefatos. Se o repositório for público, a forma curta é:
+Uma linha só:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/DaniloSkyrim/luatools-stack-armada/main/install.sh | bash
 ```
+
+O bootstrap traz a URL base embutida, baixa os artefatos para
+`~/.local/share/Lumen/bundle` e chama o instalador. Flags vão depois do `bash`:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/DaniloSkyrim/luatools-stack-armada/main/install.sh | bash --nolaunch
+```
+
+### Fork privado
+
+O bootstrap lê `GH_TOKEN`/`GITHUB_TOKEN` do ambiente e repassa o header em cada
+download dos artefatos:
+
+```bash
+read -rsp 'Token: ' GH_TOKEN; echo; export GH_TOKEN
+curl -fsSL -H "Authorization: Bearer $GH_TOKEN" https://raw.githubusercontent.com/USUARIO/REPO/main/install.sh | bash
+```
+
+Ou passe o header direto: `BUNDLE_AUTH_HEADER="Authorization: Bearer $GH_TOKEN"`, e
+`BUNDLE_BASE_URL=...` se o bundle estiver em outro caminho.
 
 ## Uso via curl (pasta hospedada)
 

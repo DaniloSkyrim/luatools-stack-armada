@@ -6,8 +6,8 @@
 #  artifacts shipped next to this script, without compiling anything.
 #
 #  Local:   cd luatools-stack-armada && sudo ./install.sh
-#  Hosted:  curl -fsSL https://host/luatools-stack-armada/install.sh \
-#             | BUNDLE_BASE_URL=https://host/luatools-stack-armada bash
+#  Hosted:  curl -fsSL https://raw.githubusercontent.com/DaniloSkyrim/luatools-stack-armada/main/install.sh | bash
+#  Mirrored (any static host):  BUNDLE_BASE_URL=https://host/path bash
 # ============================================================================
 set -uo pipefail
 
